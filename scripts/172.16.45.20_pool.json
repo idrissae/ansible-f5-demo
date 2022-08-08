@@ -1,0 +1,1 @@
+{"pool1.home.lab": ["srv1.home.local:443", "srv2.home.local:443"], "pool2.home.lab-80": ["srv1.home.local:80", "srv3.home.local:80"], "web_pool": ["192.0.1.1:80", "192.0.1.2:80"]}

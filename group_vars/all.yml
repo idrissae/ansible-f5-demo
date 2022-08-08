@@ -1,0 +1,18 @@
+bigiq_provider: 
+  password: ""
+  server: ""
+  user: admincli
+  validate_certs: no
+  server_port: 443
+
+bigip1_provider:
+  password: ""
+  server: ""
+  user: admincli
+  validate_certs: no
+  server_port: 443
+
+regkey_pool_name: "f5-ltm-regkey-pool"
+bigip_license_list:
+  - "FYMCR-PDDEM-FWDIH-"
+  - "RGRAX-MCRMI-SGD"

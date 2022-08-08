@@ -1,0 +1,39 @@
+---
+- name: Create local traffic objects on a BIG-IP
+  hosts: all
+  gather_facts: False
+  connection: local
+  vars_files:
+    - group_vars/all.yml
+  collections:
+        - f5.networks.f5_module
+
+  tasks:
+
+    - name: Create a registration key (regkey) pool 
+      f5networks.f5_modules.bigiq_regkey_pool:
+        name: "{{ regkey_pool_name }}"
+        state: present
+        provider: "{{ bigiq_provider }}"
+      delegate_to: localhost
+
+    - name: Add a registration key license to a pool
+      bigiq_regkey_license:
+        regkey_pool: "{{ regkey_pool_name }}"
+        license_key: "{{ bigip_license_list[0] }}"
+        accept_eula: yes
+        provider: "{{ bigiq_provider }}"
+      delegate_to: localhost
+      ignore_errors: yes
+
+    - name: Subscribe BigIP systems to BigIQ 
+      f5networks.f5_modules.bigiq_regkey_license_assignment:
+        pool: "{{ regkey_pool_name }}"
+        key: "{{ bigip_license_list[0] }}"
+        device: "{{ bigip1_provider.server }}"
+        device_username: "{{ bigip1_provider.user }}"
+        device_password: "{{ bigip1_provider.password }}"
+        managed: no
+        state: present
+        provider: "{{ bigiq_provider }}"
+      delegate_to: localhost
